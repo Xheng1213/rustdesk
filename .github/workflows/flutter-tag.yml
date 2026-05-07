@@ -1,6 +1,5 @@
 name: Flutter Tag Build
 
-permissions: write-all
 on:
   workflow_dispatch:
   push:
