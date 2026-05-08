@@ -11,10 +11,13 @@ jobs:
     name: Build Windows x86_64
     runs-on: windows-2022
     steps:
-      - name: Checkout
+      - name: Checkout (without submodules)
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
+
+      - name: Fetch hbb_common
+        run: |
+          rm -rf libs/hbb_common
+          git clone --depth 1 https://github.com/Xheng1213/hbb_common.git libs/hbb_common
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@1.75
