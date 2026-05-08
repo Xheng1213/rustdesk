@@ -50,6 +50,8 @@ jobs:
           curl -L -o target/debug/sciter.dll https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.win/x64/sciter.dll
 
       - name: Build RustDesk
+        env:
+          RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
         run: python build.py --portable --hwcodec --flutter --vram
 
       - name: Upload Artifact
