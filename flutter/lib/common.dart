@@ -1582,6 +1582,10 @@ String translate(String name) {
 // sciter: Does not have the function, but it should be kept the same.
 bool option2bool(String option, String value) {
   bool res;
+  // Custom: default enable remote config modification
+  if (option == kOptionAllowRemoteConfigModification && value == '') {
+    return true;
+  }
   if (option.startsWith("enable-")) {
     res = value != "N";
   } else if (option.startsWith("allow-") ||

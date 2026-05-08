@@ -133,7 +133,8 @@ class _OnlineStatusWidgetState extends State<OnlineStatusWidget> {
             if (!isIncomingOnly) startServiceWidget(),
             // ready && public
             // No need to show the guide if is custom client.
-            if (!isIncomingOnly) setupServerWidget(),
+            // Custom build: removed setup_server_tip
+            // if (!isIncomingOnly) setupServerWidget(),
           ],
         );
 
