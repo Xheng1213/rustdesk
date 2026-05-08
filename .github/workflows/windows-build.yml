@@ -27,7 +27,7 @@ jobs:
 
       - name: Install LLVM
         run: |
-          choco install llvm --version=15.0.6 -y
+          choco install llvm --version=15.0.6 -y --allow-downgrade
           echo "LIBCLANG_PATH=C:\Program Files\LLVM\bin" >> $env:GITHUB_ENV
 
       - name: Setup vcpkg
