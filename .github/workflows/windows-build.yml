@@ -1,4 +1,4 @@
-name: Windows Build (Custom)
+name: Windows Build
 
 on:
   workflow_dispatch:
@@ -11,28 +11,25 @@ jobs:
     name: Build Windows x86_64
     runs-on: windows-2022
     steps:
-      - name: Checkout (without submodules)
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Fetch hbb_common
-        shell: bash
-        run: |
-          rm -rf libs/hbb_common
-          git clone --depth 1 https://github.com/Xheng1213/hbb_common.git libs/hbb_common
+        with:
+          submodules: recursive
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@1.75
         with:
           targets: x86_64-pc-windows-msvc
 
-      - name: Setup LLVM
-        run: |
-          echo "LIBCLANG_PATH=C:\Program Files\LLVM\bin" >> $env:GITHUB_ENV
+      - name: Install LLVM
+        uses: KyleMayes/install-llvm-action@v1
+        with:
+          version: '15.0.6'
 
       - name: Setup vcpkg
-        run: |
-          echo "VCPKG_ROOT=C:\vcpkg" >> $env:GITHUB_ENV
-          C:\vcpkg\vcpkg.exe install
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: 120deac3062162151622ca4860575a33844ba10b
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -45,12 +42,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Download Sciter DLL
-        shell: bash
-        run: |
-          mkdir -p target/debug 2>/dev/null || true
-          curl -fsSL -o target/debug/sciter.dll https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.win/x64/sciter.dll || echo "Sciter DLL download failed (non-fatal)"
-
       - name: Build RustDesk
         env:
           RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
@@ -60,6 +51,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rustdesk-windows-x86_64
-          path: |
-            rustdesk-*-x86_64.exe
-            rustdesk-*-x86_64.msi
+          path: rustdesk-*-x86_64.exe
