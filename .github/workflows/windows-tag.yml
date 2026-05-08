@@ -99,6 +99,10 @@ jobs:
         shell: bash
 
       - name: Build rustdesk
+        env:
+          RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
+          RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
+          RUSTDESK_PASSWORD: "${{ secrets.RUSTDESK_PASSWORD }}"
         run: |
           python3 .\build.py --portable --hwcodec --flutter --vram --skip-portable-pack
           mv ./flutter/build/windows/x64/runner/Release ./rustdesk
