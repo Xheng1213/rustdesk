@@ -1,13 +1,10 @@
 name: Minimal Test
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+-[0-9]+'
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "OK"
+      - run: echo "Hello World"
+      - run: ls -la
