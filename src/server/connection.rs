@@ -2154,17 +2154,16 @@ impl Connection {
                     print_fallback();
                     return true;
                 }
-            } else {
-                let hard = config::HARD_SETTINGS
-                    .read()
-                    .unwrap()
-                    .get("password")
-                    .cloned()
-                    .unwrap_or_default();
-                if !hard.is_empty() && self.validate_password_plain(&hard) {
-                    print_fallback();
-                    return true;
-                }
+            }
+            let hard = config::HARD_SETTINGS
+                .read()
+                .unwrap()
+                .get("password")
+                .cloned()
+                .unwrap_or_default();
+            if !hard.is_empty() && self.validate_password_plain(&hard) {
+                print_fallback();
+                return true;
             }
         }
         false

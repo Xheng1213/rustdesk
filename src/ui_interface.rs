@@ -75,7 +75,7 @@ lazy_static::lazy_static! {
 #[cfg(not(any(target_os = "android", target_os = "ios")))]
 lazy_static::lazy_static! {
     static ref OPTION_SYNCED: Arc<Mutex<bool>> = Default::default();
-    static ref OPTIONS : Arc<Mutex<HashMap<String, String>>> = Arc::new(Mutex::new(Config::get_options()));
+    static ref OPTIONS : Arc<Mutex<HashMap<String, String>>> = Arc::new(Mutex::new(merge_hard_settings(Config::get_options())));
     pub static ref SENDER : Mutex<mpsc::UnboundedSender<ipc::Data>> = Mutex::new(check_connect_status(true));
     static ref CHILDREN : Children = Default::default();
 }
@@ -151,11 +151,16 @@ pub fn get_license() -> String {
     Default::default()
 }
 
+fn merge_hard_settings(mut options: HashMap<String, String>) -> HashMap<String, String> {
+    options.extend(config::HARD_SETTINGS.read().unwrap().clone());
+    options
+}
+
 #[inline]
 pub fn refresh_options() {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
-        *OPTIONS.lock().unwrap() = Config::get_options();
+        *OPTIONS.lock().unwrap() = merge_hard_settings(Config::get_options());
     }
 }
 
