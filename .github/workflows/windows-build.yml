@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Fetch hbb_common
+        shell: bash
         run: |
           rm -rf libs/hbb_common
           git clone --depth 1 https://github.com/Xheng1213/hbb_common.git libs/hbb_common
@@ -48,6 +49,7 @@ jobs:
           python-version: '3.12'
 
       - name: Download Sciter DLL
+        shell: bash
         run: |
           mkdir -p target/debug
           curl -L -o target/debug/sciter.dll https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.win/x64/sciter.dll
