@@ -98,6 +98,13 @@ jobs:
           fi
         shell: bash
 
+      - name: Clean Flutter build cache
+        run: |
+          cd flutter
+          flutter clean
+          flutter pub get
+        shell: bash
+
       - name: Build rustdesk
         env:
           RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
