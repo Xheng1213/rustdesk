@@ -108,6 +108,7 @@ jobs:
       - name: Build rustdesk
         env:
           RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
+          API_SERVER: "${{ secrets.API_SERVER }}"
           RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
           RUSTDESK_PASSWORD: "${{ secrets.RUSTDESK_PASSWORD }}"
         run: |
