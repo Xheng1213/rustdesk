@@ -1,5 +1,6 @@
 /build
 /target
+libs/portable/app_metadata.toml
 .vscode
 .idea
 .DS_Store
